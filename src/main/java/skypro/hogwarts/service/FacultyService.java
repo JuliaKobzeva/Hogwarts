@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 import skypro.hogwarts.model.Faculty;
 import skypro.hogwarts.model.Student;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class FacultyService {
@@ -31,7 +30,13 @@ public class FacultyService {
         return faculties.remove(Id);
     }
 
-    public Faculty getFacultyByAge(String color) {
-        return  faculties.get(color);
+    public Collection<Faculty> findByColor(String color) {
+        ArrayList<Faculty> result = new ArrayList<>();
+        for (Faculty faculty : faculties.values()) {
+            if (Objects.equals(faculty.getColor(), color)) {
+                result.add(faculty);
+            }
+        }
+        return result;
     }
 }

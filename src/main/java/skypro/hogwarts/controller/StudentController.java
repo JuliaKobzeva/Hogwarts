@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import skypro.hogwarts.model.Student;
 import skypro.hogwarts.service.StudentService;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @RequestMapping("student")
 @RestController
 public class StudentController {
@@ -41,12 +44,12 @@ public class StudentController {
         return ResponseEntity.ok(deletedStudent);
     }
 
-    @GetMapping("{age}")
-    public ResponseEntity getStudentsByAge(@PathVariable Integer age) {
-        Student student = studentService.getStudentsByAge(age);
-        if(student == null) {
-            return ResponseEntity.notFound().build();
+    @GetMapping
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
+        if (age > 0) {
+            return ResponseEntity.ok(studentService.findByAge(age));
         }
-        return ResponseEntity.ok(student);
+        return ResponseEntity.ok(Collections.emptyList());
     }
+
 }

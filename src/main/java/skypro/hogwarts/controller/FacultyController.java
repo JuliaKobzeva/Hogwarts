@@ -6,6 +6,9 @@ import skypro.hogwarts.model.Faculty;
 import skypro.hogwarts.model.Student;
 import skypro.hogwarts.service.FacultyService;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @RequestMapping("faculty")
 @RestController
 public class FacultyController {
@@ -42,13 +45,12 @@ public class FacultyController {
         return ResponseEntity.ok(deletedFaculty);
     }
 
-    @GetMapping("{color}")
-    public ResponseEntity getFacultysByAge(@PathVariable String color) {
-        Faculty faculty  = facultyService.getFacultyByAge(color);
-        if(faculty == null) {
-            return ResponseEntity.notFound().build();
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByColor(color));
         }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
 }

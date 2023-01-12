@@ -3,6 +3,8 @@ package skypro.hogwarts.service;
 import org.springframework.stereotype.Service;
 import skypro.hogwarts.model.Student;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,13 @@ public class StudentService {
         return students.remove(Id);
     }
 
-    public Student getStudentsByAge(Integer age) {
-        return  students.get(age);
+    public Collection<Student> findByAge(int age) {
+        ArrayList<Student> result = new ArrayList<>();
+        for (Student student : students.values()) {
+            if (student.getAge() == age) {
+                result.add(student);
+            }
+        }
+        return result;
     }
 }
