@@ -59,4 +59,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
     }
 
+    public ResponseEntity findFacultyOfStudent(@RequestParam String name){
+        return ResponseEntity.ok(studentService.findFacultyOfStudent(name));
+    }
+
 }

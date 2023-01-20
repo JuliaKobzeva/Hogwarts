@@ -1,6 +1,7 @@
 package skypro.hogwarts.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import skypro.hogwarts.model.Student;
 import skypro.hogwarts.repository.StudentRepository;
 
@@ -46,5 +47,9 @@ public class StudentService {
 
     public Student findByAgeBetween(int min, int max){
         return studentRepository.findByAgeBetween(min, max);
+    }
+
+    public Student findFacultyOfStudent(String name){
+        return studentRepository.findByNameFacultyOfStudent(name);
     }
 }

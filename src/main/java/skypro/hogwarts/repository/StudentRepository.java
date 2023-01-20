@@ -5,4 +5,5 @@ import skypro.hogwarts.model.Student;
 
 public interface StudentRepository extends JpaRepository <Student, Long>{
     Student findByAgeBetween(int min, int max);
+    Student findByNameFacultyOfStudent(String name);
 }

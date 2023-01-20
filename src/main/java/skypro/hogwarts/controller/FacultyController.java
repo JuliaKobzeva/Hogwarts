@@ -60,4 +60,9 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findByNameIgnoreCase(name));
     }
 
+    @GetMapping
+    public ResponseEntity findStudentsOfFaculty(@RequestParam String faculty){
+        return ResponseEntity.ok(facultyService.findStudentsOfFaculty(faculty));
+    }
+
 }
