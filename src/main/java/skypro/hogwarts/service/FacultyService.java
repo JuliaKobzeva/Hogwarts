@@ -46,7 +46,7 @@ public class FacultyService {
         return facultyRepository.findByNameIgnoreCase(name);
     }
 
-    public Collection<Student> findStudentsOfFaculty(String faculty){
-        return facultyRepository.findByNameStudentsOfFaculty(faculty);
+    public Collection<Student> findStudentsOfFaculty(Long id){
+        return facultyRepository.findStudentsByFacultyId(id);
     }
 }

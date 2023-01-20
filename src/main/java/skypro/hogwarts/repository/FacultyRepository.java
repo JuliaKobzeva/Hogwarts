@@ -9,5 +9,5 @@ import java.util.Collection;
 public interface FacultyRepository extends JpaRepository <Faculty, Long>{
     Faculty findByNameIgnoreCase(String name);
 
-    Collection<Student> findByNameStudentsOfFaculty(String name);
+    Collection<Student> findStudentsByFacultyId(Long Id);
 }
