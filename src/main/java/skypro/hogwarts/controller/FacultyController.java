@@ -9,7 +9,7 @@ import skypro.hogwarts.service.FacultyService;
 import java.util.Collection;
 import java.util.Collections;
 
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 @RestController
 public class FacultyController {
     private final FacultyService facultyService;
@@ -35,14 +35,13 @@ public class FacultyController {
 
     @PutMapping()
     public ResponseEntity updateFaculty(@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+        Faculty updatedFaculty = facultyService.updateFaculty(faculty);
         return ResponseEntity.ok(updatedFaculty);
     }
 
     @DeleteMapping("{Id}")
-    public ResponseEntity deleteFaculty(@PathVariable Long Id){
-        Faculty deletedFaculty = facultyService.deleteFaculty(Id);
-        return ResponseEntity.ok(deletedFaculty);
+    public void deleteFaculty(@PathVariable Long Id){
+        facultyService.deleteFaculty(Id);
     }
 
     @GetMapping
