@@ -52,4 +52,12 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+    @GetMapping
+    public ResponseEntity findByNameIgnoreCase(@RequestParam String name){
+        if(name == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(facultyService.findByNameIgnoreCase(name));
+    }
+
 }

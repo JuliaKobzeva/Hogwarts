@@ -43,4 +43,8 @@ public class StudentService {
         }
         return result;
     }
+
+    public Student findByAgeBetween(int min, int max){
+        return studentRepository.findByAgeBetween(min, max);
+    }
 }
