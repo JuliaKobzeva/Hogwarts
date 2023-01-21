@@ -7,9 +7,9 @@ import java.util.Objects;
 public class Student {
     @Id
     @GeneratedValue
-    Long id;
-    String name;
-    int age;
+    private Long id;
+    private String name;
+    private int age;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")

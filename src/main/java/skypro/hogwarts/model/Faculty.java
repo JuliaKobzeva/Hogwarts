@@ -9,9 +9,9 @@ import java.util.Set;
 public class Faculty {
     @Id
     @GeneratedValue
-    Long id;
-    String name;
-    String color;
+    private Long id;
+    private String name;
+    private String color;
 
     @OneToMany (mappedBy = "faculty")
     private Collection<Student> students;
