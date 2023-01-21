@@ -8,7 +8,7 @@ import skypro.hogwarts.service.StudentService;
 import java.util.Collection;
 import java.util.Collections;
 
-@RequestMapping("student")
+@RequestMapping("/student")
 @RestController
 public class StudentController {
     private final StudentService studentService;
@@ -34,14 +34,13 @@ public class StudentController {
 
     @PutMapping()
     public ResponseEntity updateStudent(@RequestBody Student student) {
-        Student updatedStudent = studentService.updateStudent(student.getId(), student);
+        Student updatedStudent = studentService.updateStudent(student);
         return ResponseEntity.ok(updatedStudent);
     }
 
     @DeleteMapping("{Id}")
-    public ResponseEntity deleteStudent(@PathVariable Long Id){
-        Student deletedStudent = studentService.deleteStudent(Id);
-        return ResponseEntity.ok(deletedStudent);
+    public void deleteStudent(@PathVariable Long Id){
+       studentService.deleteStudent(Id);
     }
 
     @GetMapping
