@@ -87,6 +87,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(value = "{Id}/avatar/preview")
     public ResponseEntity<byte[]> downloadAvatarPreview (@PathVariable Long Id){
         Avatar avatar = avatarService.findAvatar(Id);
 
@@ -97,6 +98,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
     }
 
+    @GetMapping (value = "{Id}/avatar")
     public void downloadAvatar(@PathVariable Long Id, HttpServletResponse response)throws IOException{
         Avatar avatar = avatarService.findAvatar(Id);
 
