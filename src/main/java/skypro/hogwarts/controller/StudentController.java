@@ -1,10 +1,22 @@
 package skypro.hogwarts.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import skypro.hogwarts.model.Avatar;
 import skypro.hogwarts.model.Student;
+import skypro.hogwarts.service.AvatarService;
 import skypro.hogwarts.service.StudentService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -12,9 +24,11 @@ import java.util.Collections;
 @RestController
 public class StudentController {
     private final StudentService studentService;
+    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, AvatarService avatarService) {
         this.studentService = studentService;
+        this.avatarService = avatarService;
     }
 
     @PostMapping
@@ -59,8 +73,42 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
     }
 
+    @GetMapping
     public ResponseEntity findFacultyOfStudent(@RequestParam String name){
         return ResponseEntity.ok(studentService.findFacultyOfStudent(name));
+    }
+
+    @PostMapping(value = "{Id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAvatar(@PathVariable Long Id, @RequestParam MultipartFile avatar) throws IOException{
+        if(avatar.getSize() >= 1024 * 300){
+            return ResponseEntity.badRequest().body("Файл слишком большой");
+        }
+        avatarService.uploadAvatar(Id, avatar);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<byte[]> downloadAvatarPreview (@PathVariable Long Id){
+        Avatar avatar = avatarService.findAvatar(Id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
+        headers.setContentLength(avatar.getPreview().length);
+
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
+    }
+
+    public void downloadAvatar(@PathVariable Long Id, HttpServletResponse response)throws IOException{
+        Avatar avatar = avatarService.findAvatar(Id);
+
+        Path path = Path.of(avatar.getFilePath());
+
+        try(InputStream is = Files.newInputStream(path);
+            OutputStream os = response.getOutputStream();
+        ){
+            response.setContentType(avatar.getMediaType());
+            response.setContentLength((int)avatar.getFileSize());
+            is.transferTo(os);
+        }
     }
 
 }
