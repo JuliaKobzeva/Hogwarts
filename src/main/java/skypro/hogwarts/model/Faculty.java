@@ -3,7 +3,6 @@ package skypro.hogwarts.model;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Faculty {
@@ -23,7 +22,6 @@ public class Faculty {
     }
 
     public Faculty() {
-
     }
 
     public Long getId() {
