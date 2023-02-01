@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RequestMapping("/student")
 @RestController
@@ -126,6 +127,13 @@ public class StudentController {
     @GetMapping("/five-last-students")
     public Integer findFiveLastStudents(){
         return studentService.findFiveLastStudents();
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Avatar>> getAvatarsByPages(@RequestParam("page") Integer pageNumber,
+                                                          @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars = avatarService.getAvatarsByPages(pageNumber,  pageSize);
+        return ResponseEntity.ok(avatars);
     }
 
 }

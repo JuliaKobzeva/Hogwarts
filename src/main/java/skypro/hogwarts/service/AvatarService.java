@@ -1,6 +1,7 @@
 package skypro.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import skypro.hogwarts.model.Avatar;
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -81,5 +83,10 @@ public class AvatarService {
 
     private String getExtention(String filename) {
         return filename.substring(filename.lastIndexOf(".") +1);
+    }
+
+    public List<Avatar> getAvatarsByPages (Integer pageNumber, Integer pageSize){
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
