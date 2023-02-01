@@ -129,7 +129,7 @@ public class StudentController {
         return studentService.findFiveLastStudents();
     }
 
-    @GetMapping("")
+    @GetMapping("/all-avatars")
     public ResponseEntity<List<Avatar>> getAvatarsByPages(@RequestParam("page") Integer pageNumber,
                                                           @RequestParam("size") Integer pageSize){
         List<Avatar> avatars = avatarService.getAvatarsByPages(pageNumber,  pageSize);
