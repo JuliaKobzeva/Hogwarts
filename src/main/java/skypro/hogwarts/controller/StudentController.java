@@ -136,4 +136,10 @@ public class StudentController {
         return ResponseEntity.ok(avatars);
     }
 
+    @GetMapping("name/{name}")
+    public ResponseEntity<Collection<Student>> findByName(@PathVariable("name") String name){
+        Collection<Student> students = studentService.findByName(name);
+        return ResponseEntity.ok(students);
+    }
+
 }
