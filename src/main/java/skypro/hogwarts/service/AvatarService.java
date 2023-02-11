@@ -1,5 +1,7 @@
 package skypro.hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,10 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public void uploadAvatar(Long Id, MultipartFile file) throws IOException{
+        logger.debug("A new avatar {} was uploaded", Id);
         Student student = studentService.getStudentById(Id);
 
         Path filePath = Path.of(avatarsDir, Id + "." + getExtention(file.getOriginalFilename()));
@@ -86,6 +91,7 @@ public class AvatarService {
     }
 
     public List<Avatar> getAvatarsByPages (Integer pageNumber, Integer pageSize){
+        logger.info("Was invoked method for getting avatars by pages");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
