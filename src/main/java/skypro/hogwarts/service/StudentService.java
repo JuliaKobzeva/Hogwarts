@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import skypro.hogwarts.model.Student;
 import skypro.hogwarts.repository.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -82,5 +80,13 @@ public class StudentService {
     public Collection<Student> findByName(String name){
         logger.debug("Students with name {} were found", name);
         return studentRepository.findByName(name);
+    }
+
+    public List<Student> findStudentsStartWithA() {
+        List<Student> filteredStudents = studentRepository.findAll()
+                .stream()
+                .filter(s -> s.getName().toLowerCase().toUpperCase().startsWith("А"))
+                .collect(Collectors.toList());
+        return filteredStudents;
     }
 }

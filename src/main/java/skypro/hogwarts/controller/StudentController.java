@@ -142,4 +142,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("/name-A")
+    public List <Student> findStudentsStartWithA(){
+        return studentService.findStudentsStartWithA();
+    }
+
 }
