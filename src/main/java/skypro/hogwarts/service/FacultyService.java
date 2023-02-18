@@ -8,6 +8,7 @@ import skypro.hogwarts.model.Student;
 import skypro.hogwarts.repository.FacultyRepository;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -62,11 +63,25 @@ public class FacultyService {
         return longestFacultyName;
     }
 
+    //public Integer findSum() {
+    //    int sum = Stream.iterate(1, a -> a +1)
+    //            .limit(1_000_000)
+    //            .parallel()
+    //            .reduce(0, (a, b) -> a + b );
+    //    return sum;
+    //}
+
     public Integer findSum() {
-        int sum = Stream.iterate(1, a -> a +1)
-                .limit(1_000_000)
-                .parallel()
-                .reduce(0, (a, b) -> a + b );
+        int sum = ((1 + 1_000_000)/2)* 1_000_000;
+        return sum;
+    }
+
+    public Integer findSum2() {
+        int num = 1_000_000;
+        int sum = IntStream
+                .range(1, num +1)
+                .sum();
+
         return sum;
     }
 }

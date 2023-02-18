@@ -10,6 +10,8 @@ import skypro.hogwarts.repository.StudentRepository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static jdk.internal.misc.InnocuousThread.newThread;
+
 @Service
 public class StudentService {
 
@@ -88,5 +90,52 @@ public class StudentService {
                 .filter(s -> s.getName().toLowerCase().toUpperCase().startsWith("А"))
                 .collect(Collectors.toList());
         return filteredStudents;
+    }
+
+    public Integer count = 0;
+    public Object flag = new Object();
+
+    public void printList(){
+        List<String> studentName = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .toList();
+
+        System.out.println(studentName.get(0));
+        System.out.println(studentName.get(1));
+
+        newThread(() -> {
+            System.out.println(studentName.get(2));
+            System.out.println(studentName.get(3));
+        }).start();
+
+        newThread(() -> {
+            System.out.println(studentName.get(4));
+            System.out.println(studentName.get(5));
+        }).start();
+    }
+
+    public void printListSynchronized(){
+        printName(0);
+        printName(1);
+
+        newThread(() -> {
+            printName(2);
+            printName(3);
+        }).start();
+
+        newThread(() -> {
+            printName(4);
+            printName(5);
+        }).start();
+    }
+
+    public void printName(int num){
+        List<String> studentName = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .toList();
+        synchronized (flag){
+            System.out.println(studentName.get(num) + " " + count);
+            count++;
+        }
     }
 }

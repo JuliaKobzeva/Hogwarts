@@ -147,4 +147,14 @@ public class StudentController {
         return studentService.findStudentsStartWithA();
     }
 
+    @GetMapping("/list")
+    public void printList(){
+        studentService.printList();
+    }
+
+    @GetMapping("/list-synchronized")
+    public void printListSynchronized(){
+        studentService.printListSynchronized();
+    }
+
 }
